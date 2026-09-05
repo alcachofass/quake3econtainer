@@ -1,0 +1,10 @@
+services:
+  devotion_service:
+    image: myq3srv
+    restart: always
+    ports:
+      - "27960:27960/udp"
+    volumes:
+      - "${PWD}/devotion:/home/q3user_svc/.q3a/devotion/"
+      - "${PWD}/baseq3:/home/q3user_svc/.q3a/baseq3/"
+      - "${PWD}/launcher.sh:/home/q3user_svc/.q3a/launcher.sh"
