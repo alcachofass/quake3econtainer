@@ -4,16 +4,14 @@ services:
     build:
       context: .
       dockerfile: Dockerfile
-    restart: always
+    restart: unless-stopped
     environment:
       FS_GAME: ${FS_GAME:-baseq3}
-      PORT: ${PORT:-27960}
-      RCONPASSWORD: ${RCONPASSWORD:-Password123!}
+      RCONPASSWORD: "${RCONPASSWORD:?Set RCONPASSWORD in .env}"
       DEDICATED: ${DEDICATED:-2}
       SERVER_CFG: ${SERVER_CFG:-server.cfg}
     ports:
-      - "${PORT}:27960/udp"
+      - "${PORT:-27960}:27960/udp"
     volumes:
-      - "${PWD}/${FS_GAME}:/home/q3user_svc/.q3a/${FS_GAME}/"
-      - "${PWD}/baseq3:/home/q3user_svc/.q3a/baseq3/"
-      - "${PWD}/launcher.sh:/home/q3user_svc/.q3a/launcher.sh"
+      - "./${FS_GAME:-baseq3}:/home/q3user_svc/.q3a/${FS_GAME:-baseq3}"
+      - "./baseq3:/home/q3user_svc/.q3a/baseq3"
